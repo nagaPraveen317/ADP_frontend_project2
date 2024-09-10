@@ -1,5 +1,5 @@
 
-
+import './App.css'
 
 function App() {
 function onDelete(){
@@ -18,7 +18,7 @@ function handleList(){
   return (
     <div>
       <h3>Customer List</h3>
-      <table>
+      <table className="table-style">
         <thead>
           
         <tr>
@@ -55,19 +55,19 @@ function handleList(){
       </table>
 
       <h3>Update</h3>
-      <form>
-        <label name="name" htmlFor="name" required>Name: </label>
-        <input type="text" id="name" />
+      <form className='form-style'>
+        <label name="name" htmlFor="name" >Name: </label><br/>
+        <input type="text" id="name" placeholder='enter your name' required />
         <br/>
-        <label name="email" htmlFor="email" required>Email: </label>
-        <input type="email" id="email"/>
+        <label name="email" htmlFor="email" >Email: </label><br/>
+        <input type="email" id="email" placeholder='enter your email' required/>
         <br/>
-        <label htmlFor="password" >Pass: </label>
-        <input name="password" id="password" required/>
+        <label htmlFor="password" >Pass: </label><br/>
+        <input name="password" id="password" placeholder='enter your password' required/>
         <br/>
-        <button onClick={onDelete}>Delete</button>
-        <button onClick={onSave}>Save</button>
-        <button onClick={onCancel}>Cancel</button>
+        <button onClick={onDelete} id="delete">Delete</button>
+        <button onClick={onSave} id="save">Save</button>
+        <button onClick={onCancel} id="clear">Cancel</button>
 
       </form>
     </div>

@@ -1,0 +1,105 @@
+.table-style{
+   
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size:0.9em;
+    font-family:sans-serif;
+    min-width:400px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    padding: auto;
+    margin-left:20px;
+    
+}
+
+.table-style thead tr{
+    background-color: #009879;
+    color:#ffffff;
+    text-align: left;
+}
+
+.table-style th,
+.table-style td{
+    padding: 12px 15px;
+}
+
+.table-style tbody tr{
+    border-bottom: 1px solid #dddddd;
+}
+
+.table-style tbody tr:nth-of-type(even){
+    background-color: #f3f3f3;
+}
+.table-style tbody tr:last-of-type{
+    border-bottom:2px solid #009879;
+}
+.table-style tbody tr.active-now{
+    font-weight: bold;
+    color:#009879;
+}
+.form-style{
+    
+    box-shadow: 0 0 20px rgba(0,0,0,0.15);
+    max-width: 25%;
+    margin-left: 20px;
+}
+
+.form-style input{
+   
+    width:90%;
+    padding:6px;
+    margin:10px 0;
+    border:1px solid  rgb(208, 144, 238);;
+    border-radius: 10px;
+    background-color: rgb(208, 144, 238);
+    color:whitesmoke;
+    font-weight: bold;
+    
+   
+}
+.form-style label, .form-style input{
+    margin-left:5px;
+}
+
+.form-style input:hover{
+    box-shadow: 2px 2px 5px  rgb(216, 144, 238);;
+}
+
+.form-style button{
+    padding: 5px;
+   
+    margin:5px;
+    padding-left:20px;
+    padding-right: 20px;
+    cursor:pointer;
+}
+#delete{
+    background-color: rgba(255, 0, 0, 0.568);
+    color:white;
+    font-weight: bold;
+    border: 1px solid  rgba(255, 0, 0, 0.568);
+    border-radius: 5px;
+}
+#delete:hover{
+    background-color: red;;
+}
+#save{
+    background-color: rgba(0, 128, 0, 0.418);
+    color: white;
+    font-weight: bold;
+    border: 1px solid  rgba(0, 128, 0, 0.418);
+    border-radius: 5px;
+}
+#save:hover{
+    background-color: green;
+}
+
+#clear{
+    background-color: white;
+    color:black;
+    font-weight: bold;
+    border:1px solid grey;
+    border-radius:5px;
+}
+#clear:hover{
+    background-color: grey;
+}
