@@ -1,16 +1,21 @@
 
 import './App.css'
 import {  useState } from 'react';
+import cust_data from './data.js'
 
 function App() {
-  let data={
-    name:"Jack Jackson",
-    email:"jack@abc.com",
-    password:"jackj"
-  }
-  const [selectedEntry,setSelectedEntry]=useState(data);
+  
  
-
+  const empty={
+    id:-1,
+    name:"",
+    email:"",
+    password:""
+  }
+  const [selectedEntry,setSelectedEntry]=useState(empty);
+  
+  
+ 
  
 
 function onDelete(){
@@ -22,30 +27,38 @@ function onSave(){
 function onCancel(){
   console.log("Clicked on Save button");
 }
-function handleList(e){
+function handleList(e,customer){
   
  var id=e.target.parentNode.id;
-console.log("Clicked on the entry in the list!!");
-
-console.log(id);
 var element=document.getElementById(id);
-console.log(element)
+
 let name=element.cells[0]['innerText']
-console.log(name)
 let email=element.cells[1]['innerText']
-console.log(email)
 let password=element.cells[2]['innerText']
-console.log(password)
+console.log(customer)
 let newdata={
+  
   name:name,
   email:email,
   password:password
 }
-console.log(newdata.email)
-setSelectedEntry(newdata)
 
-console.log("After set method: ")
-console.log(selectedEntry)
+console.log(selectedEntry.email)
+console.log(newdata.email);
+if(selectedEntry.email===newdata.email){
+  
+ setSelectedEntry(empty);
+
+}
+else{
+ 
+  setSelectedEntry(customer)
+  
+
+}
+
+
+
 }
 
 function handleChange(e){
@@ -66,6 +79,7 @@ else{
   setSelectedEntry(prev=>({...prev,password:password}))
 }
 
+
   
 }
 
@@ -83,27 +97,24 @@ else{
         
         </thead>
         <tbody>
-          
-        <tr id="entry1" onClick={(e)=>handleList(e)} style={{cursor:"pointer"}}>
-          
-        <td>Jack Jackson</td>
-        <td>jack@abc.com</td>
-        <td>jackj</td>
-        </tr>
-        
-       
-        <tr id="entry2" onClick={(e)=>handleList(e)} style={{cursor:"pointer"}}>
-        <td>Katie Kates</td>
-        <td>katiek@abc.com</td>
-        <td>katiek</td>
-        </tr>
-        
-        
-        <tr id="entry3" onClick={(e)=>handleList(e)} style={{cursor:"pointer"}}>
-        <td>Glen Glenns</td>
-        <td>gleng@abc.com</td>
-        <td>gleng</td>
-        </tr>
+          {
+            cust_data.map((customer,index)=>(
+              
+              <tr id={`entry${index}`} key={customer.id} onClick={(e)=>{
+                console.log("Customer details: ", customer)
+                handleList(e,customer) }
+                } style={{cursor:"pointer"}}  className={  selectedEntry.id===customer.id?'selectedRow':''}>
+                <td>{customer.name}</td>
+                <td>{customer.email}</td>
+                <td>{customer.password}</td>
+              </tr>
+              
+            )
+
+            )
+          }
+         
+      
         
         </tbody>
       </table>
