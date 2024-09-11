@@ -3,9 +3,10 @@ import './App.css'
 import {  useState } from 'react';
 import { getAll } from './memdb.js';
 
+
 function App() {
   
- 
+
   const empty={
     id:-1,
     name:"",
@@ -20,30 +21,48 @@ function App() {
     },[])
     console.log(customers)
 
-function onDelete(){
-  console.log("Clicked delete button");
-}
-function onSave(){
-  console.log("Clicked onSave button");
+function onDelete(e){
+  e.preventDefault();
+
+  if(selectedEntry.id===-1){
+  console.log("No customer is selected")
+    }
+  else{
+    console.log("selected data id is: " + selectedEntry.id);
+    deleteById(selectedEntry.id)
+    }
+ 
+  }
+
+
+function onSave(e){
+
+e.preventDefault();
+  
+  if(selectedEntry.id===-1){
+    post(selectedEntry)
+  }else{
+    put(selectedEntry.id,selectedEntry)
+  }
+ 
+
+  
 }
 function onCancel(){
   setSelectedEntry(empty)
   
 }
+
+
 function handleList(e,customer){
   
-
-
-
 if(selectedEntry.email===customer.email){
   
  setSelectedEntry(empty);
-
 }
 else{
  
   setSelectedEntry(customer)
-  
 
 }
 
@@ -66,12 +85,70 @@ else{
   password=e.target.value;
   setSelectedEntry(prev=>({...prev,password:password}))
 }
+
   
 }
 
-// functions in memdb.js
+//membd functions
 
-//end of memdb functions
+function deleteById(id) {
+  let arrayIndex = getArrayIndexForId(id);
+  if( arrayIndex >= 0 && arrayIndex < customers.length){
+    customers.splice(arrayIndex,1);
+    console.log("In deleteById method: ")
+    console.log(customers)
+    setCustomers(customers);
+    setSelectedEntry(empty)
+  }
+}
+
+function getArrayIndexForId(id){
+  for( let i = 0; i < customers.length; i++){
+    if(customers[i].id === id){
+      return i;
+    }
+  }
+  return -1;  
+}
+
+
+function getNextId(){
+  let maxid = 0;
+  for( let item of customers){
+    maxid = (item.id > maxid)?item.id:maxid;
+  }  
+  return maxid + 1;
+}
+
+ function post(item) {
+  let nextid = getNextId();
+  item.id = nextid;
+  customers[customers.length] = item;
+  setCustomers(customers)
+setSelectedEntry(empty);
+}
+
+function put(id, item) {
+  for( let i = 0; i < customers.length; i++){
+    if(customers[i].id === id){
+      customers[i] = item;
+      setCustomers(customers)
+    setSelectedEntry(empty);
+      return;
+    }
+  }
+}
+/*function get(id) {
+    let result = null;
+    for( let item of customers){
+        if(item.id === id){
+            result = item;
+        }
+    }
+  return result;
+}*/
+
+
 
   return (
     <div>
@@ -109,7 +186,7 @@ else{
         </tbody>
       </table>
 
-      <h3>Update</h3>
+      <h3>{selectedEntry.id===-1?"Add":"Update"}</h3>
       <form className='form-style'>
         <label name="name" htmlFor="name" >Name: </label><br/>
         <input type="text" id="name" placeholder='enter your name' onChange={(e)=>handleChange(e)} value={selectedEntry.name}  />
@@ -120,8 +197,8 @@ else{
         <label htmlFor="password" >Pass: </label><br/>
         <input name="password" id="password" placeholder='enter your password'value={selectedEntry.password}  onChange={(e)=>handleChange(e)} />
         <br/>
-        <button onClick={onDelete} id="delete">Delete</button>
-        <button onClick={onSave} id="save">Save</button>
+        <button onClick={(e)=>onDelete(e)} id="delete">Delete</button>
+        <button onClick={(e)=>onSave(e)} id="save">Save</button>
         <button onClick={onCancel} id="clear">Cancel</button>
 
       </form>
