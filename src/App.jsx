@@ -2,6 +2,8 @@
 import './App.css'
 import {  useState } from 'react';
 import { getAll } from './memdb.js';
+import CustomerAddUpdateForm from './components/CustomerAddUpdateForm.jsx';
+import CustomerList from './components/CustomerList.jsx';
 
 
 function App() {
@@ -48,46 +50,14 @@ e.preventDefault();
 
   
 }
-function onCancel(){
+function onCancel(e){
+  e.preventDefault();
   setSelectedEntry(empty)
   
 }
 
 
-function handleList(e,customer){
-  
-if(selectedEntry.email===customer.email){
-  
- setSelectedEntry(empty);
-}
-else{
- 
-  setSelectedEntry(customer)
 
-}
-
-}
-
-function handleChange(e){
-  console.log(e.target.id)
-  let name,email,password;
-  if(e.target.id==='name'){
-    name=e.target.value;
-    setSelectedEntry(prev=>({...prev,name:name}))
-  }
-  
-else if(e.target.id==='email'){
-  email=e.target.value;
-  setSelectedEntry(prev=>({...prev,email:email}))
-}
-
-else{
-  password=e.target.value;
-  setSelectedEntry(prev=>({...prev,password:password}))
-}
-
-  
-}
 
 //membd functions
 
@@ -138,70 +108,15 @@ function put(id, item) {
     }
   }
 }
-/*function get(id) {
-    let result = null;
-    for( let item of customers){
-        if(item.id === id){
-            result = item;
-        }
-    }
-  return result;
-}*/
 
 
 
   return (
     <div>
-      <h3>Customer List</h3>
-      <table className="table-style">
-        <thead>
-          
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Pass</th>
-        </tr>
-        
-        </thead>
-        <tbody>
-          {
-            customers.map((customer,index)=>(
-              
-              <tr id={`entry${index}`} key={customer.id} onClick={(e)=>{
-                console.log("Customer details: ", customer)
-                handleList(e,customer) }
-                } style={{cursor:"pointer"}}  className={  selectedEntry.id===customer.id?'selectedRow':''}>
-                <td>{customer.name}</td>
-                <td>{customer.email}</td>
-                <td>{customer.password}</td>
-              </tr>
-              
-            )
+      <CustomerList selectedEntry={selectedEntry} customers={customers} setSelectedEntry={setSelectedEntry} empty={empty} />
 
-            )
-          }
-         
-      
-        
-        </tbody>
-      </table>
-
-      <h3>{selectedEntry.id===-1?"Add":"Update"}</h3>
-      <form className='form-style'>
-        <label name="name" htmlFor="name" >Name: </label><br/>
-        <input type="text" id="name" placeholder='enter your name' onChange={(e)=>handleChange(e)} value={selectedEntry.name}  />
-        <br/>
-        <label name="email" htmlFor="email" >Email: </label><br/>
-        <input type="email" id="email" placeholder='enter your email' value={selectedEntry.email} onChange={(e)=>handleChange(e)} />
-        <br/>
-        <label htmlFor="password" >Pass: </label><br/>
-        <input name="password" id="password" placeholder='enter your password'value={selectedEntry.password}  onChange={(e)=>handleChange(e)} />
-        <br/>
-        <button onClick={(e)=>onDelete(e)} id="delete">Delete</button>
-        <button onClick={(e)=>onSave(e)} id="save">Save</button>
-        <button onClick={onCancel} id="clear">Cancel</button>
-
-      </form>
+      <CustomerAddUpdateForm selectedEntry={selectedEntry} setSelectedEntry={setSelectedEntry} 
+      onDelete={onDelete} onSave={onSave} onCancel={onCancel} />
     </div>
   );
 }
