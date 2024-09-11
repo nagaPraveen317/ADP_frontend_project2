@@ -1,7 +1,7 @@
 
 import './App.css'
 import {  useState } from 'react';
-import cust_data from './data.js'
+import { getAll } from './memdb.js';
 
 function App() {
   
@@ -13,10 +13,12 @@ function App() {
     password:""
   }
   const [selectedEntry,setSelectedEntry]=useState(empty);
-  
-  
- 
- 
+  const [customers,setCustomers]=useState([])
+
+    useState(()=>{
+      setCustomers(getAll());
+    },[])
+    console.log(customers)
 
 function onDelete(){
   console.log("Clicked delete button");
@@ -25,27 +27,15 @@ function onSave(){
   console.log("Clicked onSave button");
 }
 function onCancel(){
-  console.log("Clicked on Save button");
+  setSelectedEntry(empty)
+  
 }
 function handleList(e,customer){
   
- var id=e.target.parentNode.id;
-var element=document.getElementById(id);
 
-let name=element.cells[0]['innerText']
-let email=element.cells[1]['innerText']
-let password=element.cells[2]['innerText']
-console.log(customer)
-let newdata={
-  
-  name:name,
-  email:email,
-  password:password
-}
 
-console.log(selectedEntry.email)
-console.log(newdata.email);
-if(selectedEntry.email===newdata.email){
+
+if(selectedEntry.email===customer.email){
   
  setSelectedEntry(empty);
 
@@ -56,8 +46,6 @@ else{
   
 
 }
-
-
 
 }
 
@@ -78,10 +66,12 @@ else{
   password=e.target.value;
   setSelectedEntry(prev=>({...prev,password:password}))
 }
-
-
   
 }
+
+// functions in memdb.js
+
+//end of memdb functions
 
   return (
     <div>
@@ -98,7 +88,7 @@ else{
         </thead>
         <tbody>
           {
-            cust_data.map((customer,index)=>(
+            customers.map((customer,index)=>(
               
               <tr id={`entry${index}`} key={customer.id} onClick={(e)=>{
                 console.log("Customer details: ", customer)
@@ -125,10 +115,10 @@ else{
         <input type="text" id="name" placeholder='enter your name' onChange={(e)=>handleChange(e)} value={selectedEntry.name}  />
         <br/>
         <label name="email" htmlFor="email" >Email: </label><br/>
-        <input type="email" id="email" placeholder='enter your email' value={selectedEntry.email} onChange={(e)=>handleChange(e)} required/>
+        <input type="email" id="email" placeholder='enter your email' value={selectedEntry.email} onChange={(e)=>handleChange(e)} />
         <br/>
         <label htmlFor="password" >Pass: </label><br/>
-        <input name="password" id="password" placeholder='enter your password'value={selectedEntry.password}  onChange={(e)=>handleChange(e)} required/>
+        <input name="password" id="password" placeholder='enter your password'value={selectedEntry.password}  onChange={(e)=>handleChange(e)} />
         <br/>
         <button onClick={onDelete} id="delete">Delete</button>
         <button onClick={onSave} id="save">Save</button>
