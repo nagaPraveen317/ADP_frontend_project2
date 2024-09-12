@@ -1,6 +1,7 @@
 let data
 export const getAllCustomers=async()=>{
-    let response=await fetch('http://localhost:4000/customers');
+    console.log(process.env.REACT_APP_API);
+    let response=await fetch(process.env.REACT_APP_API);
     data=await response.json();
     console.log( data)
    

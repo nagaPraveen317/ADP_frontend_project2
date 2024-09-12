@@ -1,5 +1,11 @@
+import { useState } from "react";
+
 const CustomerList=(props)=>{
 
+  const [recordsToShow,setRecordsToShow]=useState(10);
+  const loadMoreRecords = () => {
+    setRecordsToShow(recordsToShow + 10); // Load the next 100 records
+  };
     
 function handleList(e,customer){
   
@@ -18,6 +24,7 @@ else{
    return (
      <>
         <h3>Customer List</h3>
+        <div className="tableWrapper">
       <table className="table-style">
         <thead>
           
@@ -30,7 +37,7 @@ else{
         </thead>
         <tbody>
           {
-            props.customers.map((customer,index)=>(
+            props.customers.slice(recordsToShow-10,recordsToShow).map((customer,index)=>(
               
               <tr id={`entry${index}`} key={customer.id} onClick={(e)=>{
                 console.log("Customer details: ", customer)
@@ -50,6 +57,13 @@ else{
         
         </tbody>
       </table>
+     
+      </div>
+       {recordsToShow < props.customers.length && (
+        <button onClick={loadMoreRecords} style={{ marginTop: '10px', padding: '10px 20px', cursor: 'pointer' }}>
+          Next
+        </button>
+      )}
     </>
 
    )
