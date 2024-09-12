@@ -1,14 +1,15 @@
 
 import './App.css'
-import {  useState } from 'react';
-import { getAll } from './memdb.js';
+import {  useEffect, useState } from 'react';
 import CustomerAddUpdateForm from './components/CustomerAddUpdateForm.jsx';
 import CustomerList from './components/CustomerList.jsx';
+import { getAllCustomers } from './restdb.js';
 
 
 function App() {
   
 
+  
   const empty={
     id:-1,
     name:"",
@@ -17,21 +18,31 @@ function App() {
   }
   const [selectedEntry,setSelectedEntry]=useState(empty);
   const [customers,setCustomers]=useState([])
-
-    useState(()=>{
-      setCustomers(getAll());
-    },[])
-    console.log(customers)
+ const fetchData=async()=>{
+        const data=await getAllCustomers()
+        setCustomers(data);
+        setSelectedEntry(empty)
+      } 
+    useEffect(()=>{
+    
+    
+      fetchData();
+      
+    },[0])
+    
 
 function onDelete(e){
   e.preventDefault();
 
   if(selectedEntry.id===-1){
-  console.log("No customer is selected")
+  
+  window.alert("Please Select the customer to delete");
     }
   else{
-    console.log("selected data id is: " + selectedEntry.id);
-    deleteById(selectedEntry.id)
+    
+    deleteByIdinAPI(selectedEntry.id)
+   
+    
     }
  
   }
@@ -42,9 +53,14 @@ function onSave(e){
 e.preventDefault();
   
   if(selectedEntry.id===-1){
-    post(selectedEntry)
+    let data={
+      name:selectedEntry.name,
+      email:selectedEntry.email,
+      password:selectedEntry.password
+    }
+    postinAPI(data)
   }else{
-    put(selectedEntry.id,selectedEntry)
+    putinAPI(selectedEntry.id,selectedEntry)
   }
  
 
@@ -58,56 +74,62 @@ function onCancel(e){
 
 
 
+async function deleteByIdinAPI (id){
+  const response =await fetch(`http://localhost:4000/customers/${id}`, {
+      method: "DELETE",
+    })
+      .then(response => response.json())
+      console.log(response)
+      fetchData();
+}
 
-//membd functions
+async function postinAPI(item){
+  if(item.name && item.email && item.password){
 
-function deleteById(id) {
-  let arrayIndex = getArrayIndexForId(id);
-  if( arrayIndex >= 0 && arrayIndex < customers.length){
-    customers.splice(arrayIndex,1);
-    console.log("In deleteById method: ")
-    console.log(customers)
-    setCustomers(customers);
-    setSelectedEntry(empty)
+    await fetch("http://localhost:4000/customers", {
+        method: "POST",
+        body: JSON.stringify(item),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+      .then(response => response.json())
+        .then(data => {
+          console.log(data)
+        })
+
   }
-}
-
-function getArrayIndexForId(id){
-  for( let i = 0; i < customers.length; i++){
-    if(customers[i].id === id){
-      return i;
-    }
+  else{
+    console.log("Please fill all the fields")
+    window.alert("Please fill all the details");
+    fetchData();
   }
-  return -1;  
+  fetchData();
 }
 
 
-function getNextId(){
-  let maxid = 0;
-  for( let item of customers){
-    maxid = (item.id > maxid)?item.id:maxid;
-  }  
-  return maxid + 1;
-}
-
- function post(item) {
-  let nextid = getNextId();
-  item.id = nextid;
-  customers[customers.length] = item;
-  setCustomers(customers)
-setSelectedEntry(empty);
-}
-
-function put(id, item) {
-  for( let i = 0; i < customers.length; i++){
-    if(customers[i].id === id){
-      customers[i] = item;
-      setCustomers(customers)
-    setSelectedEntry(empty);
-      return;
-    }
+async function putinAPI(id,item){
+  if(item.name && item.email && item.password){
+    await fetch(`http://localhost:4000/customers/${id}`, {
+        method: "PUT",
+        body: JSON.stringify(item),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8",
+        },
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data)
+        })
+        
   }
+  else{
+    window.alert("All the fields are not filled, please do check!!");
+   
+  }
+   fetchData();
 }
+
 
 
 
