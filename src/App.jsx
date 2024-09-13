@@ -17,12 +17,14 @@ function App() {
   }
   const [selectedEntry,setSelectedEntry]=useState(empty);
   const [customers,setCustomers]=useState([])
-
-    useEffect(()=>{
-       const fetchCustomers = async () => {
-      const data =   getAll(); // Ensure this is actually called
+  const [search,setSearch]=useState("");
+ const fetchCustomers = async () => {
+      const data =   getAll(); 
       setCustomers(data);
+     
     };
+    useEffect(()=>{
+      
     fetchCustomers();
     },[])
 
@@ -34,6 +36,7 @@ function onDelete(e){
   e.preventDefault();
 
   if(selectedEntry.id===-1){
+    window.alert("please select the customer to delete")
   console.log("No customer is selected")
     }
   else{
@@ -98,6 +101,9 @@ function getNextId(){
 }
 
  function post(item) {
+  if(item.name==='' || item.email==='' || item.password===''){
+    window.alert("please fill the details")
+  }
   let nextid = getNextId();
   item.id = nextid;
   customers[((customers||[]).length)] = item;
@@ -106,6 +112,9 @@ setSelectedEntry(empty);
 }
 
 function put(id, item) {
+   if(item.name==='' || item.email==='' || item.password===''){
+    window.alert("please fill the details")
+  }
   for( let i = 0; i < ((customers||[]).length); i++){
     if(customers[i].id === id){
       customers[i] = item;
@@ -114,12 +123,40 @@ function put(id, item) {
       return;
     }
   }
+
+ 
+}
+
+ function handleInputChange (event){
+ console.log('in handle input')
+  let val=event.target.value;
+  setSearch(val);
+ const filteredCustomers = customers.filter(customer =>
+    customer.name.toLowerCase().includes(val.toLowerCase())
+  );
+  console.log(search)
+  setCustomers(filteredCustomers);
+  console.log(val)
+if(val===''){
+  
+handleClear();
+}
+  
 }
 
 
+function handleClear(){
+  setSearch("");
+  
+  fetchCustomers();
+  
 
+}
   return (
     <div>
+      
+      <input className='search-style' id="search-id" type='textbox' onChange={handleInputChange} placeholder='search' value={search}/>
+     
       <CustomerList selectedEntry={selectedEntry} customers={customers} setSelectedEntry={setSelectedEntry} empty={empty} />
 
       <CustomerAddUpdateForm selectedEntry={selectedEntry} setSelectedEntry={setSelectedEntry} 

@@ -1,4 +1,23 @@
 
+.go-btn,.clear-btn{
+    padding-top: 4px;
+        padding-bottom: 4px;
+        margin-left: 1px;
+        cursor: pointer;
+}
+
+.search-style{
+    border-radius: 3px;
+    border: 2px solid grey;
+    margin-left: 70%;
+        margin-top: 30px;
+    padding-left: 40px;
+    padding-right:40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    
+}
+
 .header{
     text-align: center;
     color: green;
