@@ -1,106 +1,176 @@
-.table-style{
-   
-    border-collapse: collapse;
-    margin: 25px 0;
-    font-size:0.9em;
-    font-family:sans-serif;
-    min-width:400px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.15);
-    padding: auto;
-    margin-left:20px;
+
+.header{
+    text-align: center;
+    color: green;
     
 }
+.table-style {
 
-.table-style thead tr{
+    border-collapse: collapse;
+
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    padding: auto;
+
+
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border-left: green;
+
+}
+
+.tableWrapper {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    height: 400px;
+    overflow-y: auto;
+    border-bottom: green;
+    border-left: green;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.table-style thead {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+
+.table-style thead tr {
     background-color: #009879;
-    color:#ffffff;
+    color: #ffffff;
     text-align: left;
 }
 
 .table-style th,
-.table-style td{
+.table-style td {
     padding: 12px 15px;
 }
 
-.table-style tbody tr{
+.table-style tbody tr {
     border-bottom: 1px solid #dddddd;
 }
 
 
-.table-style tbody tr:last-of-type{
-    border-bottom:2px solid #009879;
+.table-style tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
 }
-.table-style tbody tr.active-now{
+
+.table-style tbody tr.active-now {
     font-weight: bold;
-    color:#009879;
+    color: #009879;
 }
-.form-style{
-    
-    box-shadow: 0 0 20px rgba(0,0,0,0.15);
-    max-width: 25%;
-    margin-left: 20px;
+.button-container {
+    display: flex;
+    justify-content: center;
 }
 
-.form-style input{
-   
-    width:90%;
-    padding:6px;
-    margin:10px 0;
-    border:1px solid  rgb(208, 144, 238);;
-    border-radius: 10px;
-    background-color: rgb(208, 144, 238);
-    color:whitesmoke;
-    font-weight: bold;
-    
-   
-}
-.form-style label, .form-style input{
-    margin-left:5px;
-}
-
-.form-style input:hover{
-    box-shadow: 2px 2px 5px  rgb(216, 144, 238);;
-}
-
-.form-style button{
-    padding: 5px;
-   
-    margin:5px;
+.button-container button {
+    margin-top:20px;
+    padding: 6px;
     padding-left:20px;
     padding-right: 20px;
-    cursor:pointer;
+    margin-right: 10px;
+    cursor: pointer;
+   
 }
-#delete{
-    background-color: rgba(255, 0, 0, 0.568);
-    color:white;
+
+.button-container button:last-child {
+    margin-right: 0;
+}
+.form-style {
+
+  
+    max-width: 45%;
+    height: 45%;
+    margin-left: 20px;
+    margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 100px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.form-style input {
+
+    width: 90%;
+    padding: 6px;
+    margin: 10px 0;
+    border: 1px solid rgb(208, 144, 238);
+    ;
+    border-radius: 10px;
+    background-color: rgb(208, 144, 238);
+    color: whitesmoke;
     font-weight: bold;
-    border: 1px solid  rgba(255, 0, 0, 0.568);
+
+
+}
+
+.add-header{
+    text-align: center;
+    color:blueviolet;
+    margin-top:50px;
+}
+
+.form-style label,
+.form-style input {
+    margin-left: 5px;
+}
+
+.form-style input:hover {
+    box-shadow: 2px 2px 5px rgb(216, 144, 238);
+    ;
+}
+
+.form-style button {
+    padding: 5px;
+
+    margin: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+}
+
+#delete {
+    background-color: rgba(255, 0, 0, 0.568);
+    color: white;
+    font-weight: bold;
+    border: 1px solid rgba(255, 0, 0, 0.568);
     border-radius: 5px;
 }
-#delete:hover{
-    background-color: red;;
+
+#delete:hover {
+    background-color: red;
+    ;
 }
-#save{
+
+#save {
     background-color: rgba(0, 128, 0, 0.418);
     color: white;
     font-weight: bold;
-    border: 1px solid  rgba(0, 128, 0, 0.418);
+    border: 1px solid rgba(0, 128, 0, 0.418);
     border-radius: 5px;
 }
-#save:hover{
+
+#save:hover {
     background-color: green;
 }
 
-#clear{
+#clear {
     background-color: white;
-    color:black;
+    color: black;
     font-weight: bold;
-    border:1px solid grey;
-    border-radius:5px;
+    border: 1px solid grey;
+    border-radius: 5px;
 }
-#clear:hover{
+
+#clear:hover {
     background-color: grey;
 }
-.selectedRow{
+
+.selectedRow {
     background-color: green;
 }

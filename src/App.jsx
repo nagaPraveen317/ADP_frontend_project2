@@ -1,6 +1,6 @@
 
 import './App.css'
-import {  useState } from 'react';
+import {  useState,useEffect } from 'react';
 import { getAll } from './memdb.js';
 import CustomerAddUpdateForm from './components/CustomerAddUpdateForm.jsx';
 import CustomerList from './components/CustomerList.jsx';
@@ -18,10 +18,17 @@ function App() {
   const [selectedEntry,setSelectedEntry]=useState(empty);
   const [customers,setCustomers]=useState([])
 
-    useState(()=>{
-      setCustomers(getAll());
+    useEffect(()=>{
+       const fetchCustomers = async () => {
+      const data =   getAll(); // Ensure this is actually called
+      setCustomers(data);
+    };
+    fetchCustomers();
     },[])
-    console.log(customers)
+
+
+    
+    
 
 function onDelete(e){
   e.preventDefault();
@@ -84,8 +91,8 @@ function getArrayIndexForId(id){
 
 function getNextId(){
   let maxid = 0;
-  for( let item of customers){
-    maxid = (item.id > maxid)?item.id:maxid;
+  for( let i; i<((customers||[]).length);i++){
+    maxid = (customers[i].id > maxid)?customers[i].id:maxid;
   }  
   return maxid + 1;
 }
@@ -93,13 +100,13 @@ function getNextId(){
  function post(item) {
   let nextid = getNextId();
   item.id = nextid;
-  customers[customers.length] = item;
+  customers[((customers||[]).length)] = item;
   setCustomers(customers)
 setSelectedEntry(empty);
 }
 
 function put(id, item) {
-  for( let i = 0; i < customers.length; i++){
+  for( let i = 0; i < ((customers||[]).length); i++){
     if(customers[i].id === id){
       customers[i] = item;
       setCustomers(customers)
